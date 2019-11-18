@@ -4,7 +4,7 @@ pipeline {
 	{
 	ant_build = "C:\\Users\\PallaviKathpalia\\IBM\\IIBT10\\workspace_New\\IIB_Build_Process\\HttpReqReply\\Build\\build.xml"
 	registry = "pallavikthpl/iibmq_poc1"
-    	registryCredential = ‘dockerhub’
+    	registryCredential = 'dockerhub'
 	dockerImage = ''
 	}
     stages {
