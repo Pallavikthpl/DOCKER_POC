@@ -9,20 +9,11 @@ pipeline {
         stage('Checkout') { 
             
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Pallavikthpl/IIB_Build_Process.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/Pallavikthpl/DOCKER_POC.git']]])
             }
         }
         
-        stage('Sonarqube') {
-		environment {
-        scannerHome = tool 'LocalSonarQubeScanner'
-		}
-		steps {
-        withSonarQubeEnv('sonar_server') {
-            bat "${scannerHome}/bin/sonar-scanner"
-        }
-		}
-		}
+        
 	  stage('Build') {
 		steps
 		{
@@ -47,16 +38,7 @@ pipeline {
 			}
 		}
 		}
-	    stage('UCD deploy')
-{
-steps{
-step([$class: 'UCDeployPublisher',
-component: [componentName: 'IIB_Bar_Deploy', componentTag: '',
-delivery: [$class: 'Push', baseDir: '//home//pallavi//UCD', fileExcludePatterns: '', fileIncludePatterns: '*.bar', pushDescription: '', pushIncremental: false, pushProperties: '', pushVersion: '${BUILD_NUMBER}']],
-deploy: [deployApp: 'IIB_Deployment', deployDesc: 'Requested from Jenkins', deployEnv: 'IIB_Environment', deployOnlyChanged: false, deployProc: 'IIB_BAR_DEPLOY_PROCESS', deployReqProps: '', deployVersions: 'IIB_Bar_Deploy:${BUILD_NUMBER}', skipWait: false], siteName: 'UDeploy-server'])
- 
-}
-}
+	    
         stage('Deploy') {
                 
             steps {
