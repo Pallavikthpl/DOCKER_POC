@@ -42,7 +42,7 @@ pipeline {
         stage('Docker') {
                 
             steps {
-                docker.image(iibcom/iib).pull
+                docker.image("iibcom/iib").pull()
             }
         }
     }
