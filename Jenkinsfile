@@ -3,6 +3,8 @@ pipeline {
 	environment
 	{
 	ant_build = "C:\\Users\\PallaviKathpalia\\IBM\\IIBT10\\workspace_New\\IIB_Build_Process\\HttpReqReply\\Build\\build.xml"
+	registry = "pallavikthpl/iibmq_poc1"
+    	registryCredential = ‘dockerhub’	
 	}
     stages {
 	    
@@ -42,8 +44,10 @@ pipeline {
         stage('Docker') {
                 
             steps {
-                docker.image("iibcom/iib").pull()
+		    script{
+                	docker.build registry + ":BUILD_NUMBER"
             }
+	    }
         }
     }
 }
