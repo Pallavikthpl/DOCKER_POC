@@ -39,10 +39,10 @@ pipeline {
 		}
 		}
 	    
-        stage('Deploy') {
+        stage('Docker') {
                 
             steps {
-                bat "echo Deploy"
+                docker.image(iibcom/iib).pull
             }
         }
     }
