@@ -42,22 +42,19 @@ pipeline {
 		}
 		}
 	    
-        stage('Build Docker Image') {
+        stage('Test Service') {
                 
             steps {
 		    script{
-                	dockerImage = docker.build registry + ":BUILD_NUMBER"
+                	def get = new URL("http://192.168.56.103:7801/Transformation_Map").openConnection();
+			def getRC = get.getResponseCode();
+			println(getRC);
+			if(getRC.equals(200)) {
+   			println(get.getInputStream().getText());
+}
             }
 	    }
         }
-	    stage('Deploy Image') {
-      steps{
-        script {
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-          }
-        }
-      }
-    }
+	    
     }
 }
